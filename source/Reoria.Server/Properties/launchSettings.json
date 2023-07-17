@@ -1,0 +1,8 @@
+{
+  "profiles": {
+    "Reoria.Server": {
+      "commandName": "Project",
+      "commandLineArgs": "username=\"World\""
+    }
+  }
+}

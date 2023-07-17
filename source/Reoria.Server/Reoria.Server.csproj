@@ -41,6 +41,7 @@
     <ProjectReference Include="..\Reoria.Game\Reoria.Game.csproj" />
     <ProjectReference Include="..\Reoria.Network\Reoria.Network.csproj" />
     <ProjectReference Include="..\Reoria\Reoria.csproj" />
+    <PackageReference Include="Microsoft.Extensions.Hosting" Version="8.0.0-preview.6.23329.7" />
   </ItemGroup>
 
 </Project>
