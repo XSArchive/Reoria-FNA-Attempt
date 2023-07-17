@@ -1,3 +1,2 @@
-﻿
-using var game = new Reoria.Client.Game1();
+﻿using var game = new Reoria.Client.MonoGame.GameInstance();
 game.Run();

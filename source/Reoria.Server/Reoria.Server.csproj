@@ -5,6 +5,42 @@
     <TargetFramework>net6.0</TargetFramework>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
+    <BaseOutputPath>$(SolutionDir)bin\$(AssemblyName)</BaseOutputPath>
+    <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
+    <AppendRuntimeIdentifierToOutputPath>false</AppendRuntimeIdentifierToOutputPath>
+    <Title>$(AssemblyName)</Title>
+    <Authors>XerShade</Authors>
+    <Company>XerShade's Corner</Company>
+    <Product>Reoria</Product>
+    <Description>The server application for Reoria, an online adventure role playing game.</Description>
+    <Copyright>© XerShade 2023 - 2023</Copyright>
+    <PackageProjectUrl>https://github.com/XerShade/XerShade.Reoria</PackageProjectUrl>
+    <PackageReadmeFile>README.md</PackageReadmeFile>
+    <RepositoryUrl>https://github.com/XerShade/XerShade.Reoria</RepositoryUrl>
+    <RepositoryType>git</RepositoryType>
+    <PackageTags>xershade,reoria,online,adventure,role,playing,game,server</PackageTags>
+    <PackageOutputPath>$(SolutionDir)pkg\$(AssemblyName)</PackageOutputPath>
+    <AssemblyVersion>$(VersionPrefix)</AssemblyVersion>
+    <FileVersion>$(VersionPrefix)</FileVersion>
+    <Version>0.1.0</Version>
+    <PackageLicenseFile>LICENSE</PackageLicenseFile>
   </PropertyGroup>
+
+  <ItemGroup>
+    <None Include="..\..\LICENSE">
+      <Pack>True</Pack>
+      <PackagePath>\</PackagePath>
+    </None>
+    <None Include="..\..\README.md">
+      <Pack>True</Pack>
+      <PackagePath>\</PackagePath>
+    </None>
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Reoria.Game\Reoria.Game.csproj" />
+    <ProjectReference Include="..\Reoria.Network\Reoria.Network.csproj" />
+    <ProjectReference Include="..\Reoria\Reoria.csproj" />
+  </ItemGroup>
 
 </Project>

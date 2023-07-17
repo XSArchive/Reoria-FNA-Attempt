@@ -5,22 +5,55 @@
     <RollForward>Major</RollForward>
     <PublishReadyToRun>false</PublishReadyToRun>
     <TieredCompilation>false</TieredCompilation>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+    <BaseOutputPath>$(SolutionDir)bin\$(AssemblyName)</BaseOutputPath>
+    <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
+    <AppendRuntimeIdentifierToOutputPath>false</AppendRuntimeIdentifierToOutputPath>
+    <Title>$(AssemblyName)</Title>
+    <Authors>XerShade</Authors>
+    <Company>XerShade's Corner</Company>
+    <Product>Reoria</Product>
+    <Description>The client application for Reoria, an online adventure role playing game.</Description>
+    <Copyright>© XerShade 2023 - 2023</Copyright>
+    <PackageProjectUrl>https://github.com/XerShade/XerShade.Reoria</PackageProjectUrl>
+    <PackageReadmeFile>README.md</PackageReadmeFile>
+    <RepositoryUrl>https://github.com/XerShade/XerShade.Reoria</RepositoryUrl>
+    <RepositoryType>git</RepositoryType>
+    <PackageTags>xershade,reoria,online,adventure,role,playing,game,client</PackageTags>
+    <PackageOutputPath>$(SolutionDir)pkg\$(AssemblyName)</PackageOutputPath>
+    <AssemblyVersion>$(VersionPrefix)</AssemblyVersion>
+    <FileVersion>$(VersionPrefix)</FileVersion>
+    <Version>0.1.0</Version>
+    <PackageLicenseFile>LICENSE</PackageLicenseFile>
   </PropertyGroup>
-  <PropertyGroup>
-    <ApplicationManifest>app.manifest</ApplicationManifest>
-    <ApplicationIcon>Icon.ico</ApplicationIcon>
-  </PropertyGroup>
+
   <ItemGroup>
-    <None Remove="Icon.ico" />
-    <None Remove="Icon.bmp" />
+    <None Include="..\..\LICENSE">
+      <Pack>True</Pack>
+      <PackagePath>\</PackagePath>
+    </None>
+    <None Include="..\..\README.md">
+      <Pack>True</Pack>
+      <PackagePath>\</PackagePath>
+    </None>
   </ItemGroup>
+  <PropertyGroup>
+    <ApplicationManifest>Resources\app.manifest</ApplicationManifest>
+    <ApplicationIcon>Resources\Icon.ico</ApplicationIcon>
+  </PropertyGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Icon.ico" />
-    <EmbeddedResource Include="Icon.bmp" />
+    <EmbeddedResource Include="Resources\Icon.ico" />
+    <EmbeddedResource Include="Resources\Icon.bmp" />
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="MonoGame.Framework.DesktopGL" Version="3.8.1.303" />
-    <PackageReference Include="MonoGame.Content.Builder.Task" Version="3.8.1.303" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Reoria.Client.MonoGame\Reoria.Client.MonoGame.csproj" />
+    <ProjectReference Include="..\Reoria.Game\Reoria.Game.csproj" />
+    <ProjectReference Include="..\Reoria.Network\Reoria.Network.csproj" />
+    <ProjectReference Include="..\Reoria\Reoria.csproj" />
   </ItemGroup>
   <Target Name="RestoreDotnetTools" BeforeTargets="Restore">
     <Message Text="Restoring dotnet tools" Importance="High" />
