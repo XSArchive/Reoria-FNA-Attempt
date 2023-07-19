@@ -3,7 +3,7 @@ using Reoria.Application.Interfaces;
 
 namespace Reoria.Application
 {
-    public class AppSettingsLoader : IAppSettingsLoader
+    public class AppConfigurationLoader : IAppConfigurationLoader
     {
         private static readonly string[] Environments = { "Development", "Staging", "Production" };
 
@@ -11,7 +11,7 @@ namespace Reoria.Application
 
         public IConfigurationBuilder Builder => configurationBuilder;
 
-        public AppSettingsLoader()
+        public AppConfigurationLoader()
         {
             configurationBuilder = new ConfigurationBuilder()
                 .SetBasePath(Directory.GetCurrentDirectory())
@@ -19,7 +19,7 @@ namespace Reoria.Application
                 .AddJsonFile($"appsettings.{ApplicationBuilder.GetEnvironment().ToLower()}.json", optional: true, reloadOnChange: true);
         }
 
-        public IAppSettingsLoader AddDirectory(string directoryPath)
+        public IAppConfigurationLoader AddDirectory(string directoryPath)
         {
             var appSettingsFiles = Directory.GetFiles(directoryPath, "appsettings.*.json");
             foreach (var appSettingsFile in appSettingsFiles)

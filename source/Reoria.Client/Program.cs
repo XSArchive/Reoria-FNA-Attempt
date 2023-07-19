@@ -9,9 +9,9 @@ internal class Program
     {
         new ApplicationBuilder(args).ConfigureConfiguration((builder, configuration) =>
         {
-            var appSettingsLoader = new AppSettingsLoader();
+            var appSettingsLoader = new AppConfigurationLoader();
 
-            configuration.AddConfiguration(appSettingsLoader.Builder.Build());
+            configuration.AddConfiguration(appSettingsLoader.Builder.AddEnvironmentVariables().Build());
         }).ConfigureServices((context, services) =>
         {
             services.AddTransient<IClientService, ClientService>();
