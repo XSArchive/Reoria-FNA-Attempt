@@ -1,6 +1,6 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using Reoria.Application;
-using Reoria.Client.MonoGame;
+using Reoria.Client.FNA;
 
 internal class Program
 {

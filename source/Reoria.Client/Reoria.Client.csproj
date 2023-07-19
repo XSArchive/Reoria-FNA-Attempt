@@ -1,10 +1,7 @@
 <Project Sdk="Microsoft.NET.Sdk">
+
   <PropertyGroup>
-    <OutputType>WinExe</OutputType>
-    <TargetFramework>net6.0</TargetFramework>
-    <RollForward>Major</RollForward>
-    <PublishReadyToRun>false</PublishReadyToRun>
-    <TieredCompilation>false</TieredCompilation>
+    <TargetFramework>net7.0</TargetFramework>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
     <BaseOutputPath>$(SolutionDir)bin\$(AssemblyName)</BaseOutputPath>
@@ -28,6 +25,14 @@
     <PackageLicenseFile>LICENSE</PackageLicenseFile>
   </PropertyGroup>
 
+  <PropertyGroup Condition="'$(Configuration)'=='Release'">
+    <OutputType>WinExe</OutputType>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)'=='Debug'">
+    <OutputType>Exe</OutputType>
+  </PropertyGroup>
+
   <ItemGroup>
     <None Include="..\..\LICENSE">
       <Pack>True</Pack>
@@ -38,24 +43,14 @@
       <PackagePath>\</PackagePath>
     </None>
   </ItemGroup>
-  <PropertyGroup>
-    <ApplicationManifest>Resources\app.manifest</ApplicationManifest>
-    <ApplicationIcon>Resources\Icon.ico</ApplicationIcon>
-  </PropertyGroup>
+  
   <ItemGroup>
-    <EmbeddedResource Include="Resources\Icon.ico" />
-    <EmbeddedResource Include="Resources\Icon.bmp" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\Reoria.Client.MonoGame\Reoria.Client.MonoGame.csproj" />
+    <ProjectReference Include="..\FNA.Runtimes\FNA.Runtimes.csproj" />
+    <ProjectReference Include="..\FNA\FNA.Core.csproj" />
     <ProjectReference Include="..\Reoria.Game\Reoria.Game.csproj" />
     <ProjectReference Include="..\Reoria.Network\Reoria.Network.csproj" />
     <ProjectReference Include="..\Reoria\Reoria.csproj" />
-    <PackageReference Include="MonoGame.Framework.DesktopGL" Version="3.8.1.303" />
     <PackageReference Include="Microsoft.Extensions.Hosting" Version="8.0.0-preview.6.23329.7" />
   </ItemGroup>
-  <Target Name="RestoreDotnetTools" BeforeTargets="Restore">
-    <Message Text="Restoring dotnet tools" Importance="High" />
-    <Exec Command="dotnet tool restore" />
-  </Target>
+
 </Project>

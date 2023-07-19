@@ -1,13 +1,14 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
+using Reoria.Client.FNA.Interfaces;
 
-namespace Reoria.Client.MonoGame
+namespace Reoria.Client.FNA
 {
-    public class GameInstance : Game
+    public class GameInstance : Game, IGameInstance
     {
-        private GraphicsDeviceManager _graphics;
-        private SpriteBatch _spriteBatch;
+        private readonly GraphicsDeviceManager? _graphics;
+        private SpriteBatch? _spriteBatch;
 
         public GameInstance()
         {
