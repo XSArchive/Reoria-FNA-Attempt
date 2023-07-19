@@ -1,0 +1,129 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFrameworks>netstandard2.0;net7.0</TargetFrameworks>
+  </PropertyGroup>
+
+  <ItemGroup Condition="'$(Platform)'=='AnyCPU'">
+    <None Update="x64\FAudio.dll">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <TargetPath>FAudio.dll</TargetPath>
+    </None>
+    <None Update="x64\FNA3D.dll">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <TargetPath>FNA3D.dll</TargetPath>
+    </None>
+    <None Update="x64\libtheorafile.dll">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <TargetPath>libtheorafile.dll</TargetPath>
+    </None>
+    <None Update="x64\SDL2.dll">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <TargetPath>SDL2.dll</TargetPath>
+    </None>
+  </ItemGroup>
+
+  <ItemGroup Condition="'$(Platform)'=='x64'">
+    <None Update="x64\FAudio.dll">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <TargetPath>FAudio.dll</TargetPath>
+    </None>
+    <None Update="x64\FNA3D.dll">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <TargetPath>FNA3D.dll</TargetPath>
+    </None>
+    <None Update="x64\libtheorafile.dll">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <TargetPath>libtheorafile.dll</TargetPath>
+    </None>
+    <None Update="x64\SDL2.dll">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <TargetPath>SDL2.dll</TargetPath>
+    </None>
+  </ItemGroup>
+
+  <ItemGroup Condition="'$(Platform)'=='x86'">
+    <None Update="x86\FAudio.dll">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <TargetPath>FAudio.dll</TargetPath>
+    </None>
+    <None Update="x86\FNA3D.dll">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <TargetPath>FNA3D.dll</TargetPath>
+    </None>
+    <None Update="x86\libtheorafile.dll">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <TargetPath>libtheorafile.dll</TargetPath>
+    </None>
+    <None Update="x86\SDL2.dll">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <TargetPath>SDL2.dll</TargetPath>
+    </None>
+  </ItemGroup>
+
+  <ItemGroup Condition="'$(Platform)'=='osx'">
+    <None Update="osx\libFAudio.0.dylib">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <TargetPath>libFAudio.0.dylib</TargetPath>
+    </None>
+    <None Update="osx\libFNA3D.0.dylib">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <TargetPath>libFNA3D.0.dylib</TargetPath>
+    </None>
+    <None Update="osx\libMoltenVK.dylib">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <TargetPath>libMoltenVK.dylib</TargetPath>
+    </None>
+    <None Update="osx\libSDL2-2.0.0.dylib">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <TargetPath>libSDL2-2.0.0.dylib</TargetPath>
+    </None>
+    <None Update="osx\libtheorafile.dylib">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <TargetPath>libtheorafile.dylib</TargetPath>
+    </None>
+    <None Update="osx\libvulkan.1.dylib">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <TargetPath>libvulkan.1.dylib</TargetPath>
+    </None>
+  </ItemGroup>
+
+  <ItemGroup Condition="'$(Platform)'=='libaarch64'">
+    <None Update="libaarch64\libFAudio.so.0">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <TargetPath>libFAudio.so.0</TargetPath>
+    </None>
+    <None Update="libaarch64\libFNA3D.so.0">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <TargetPath>libFNA3D.so.0</TargetPath>
+    </None>
+    <None Update="libaarch64\libSDL2-2.0.so.0">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <TargetPath>libSDL2-2.0.so.0</TargetPath>
+    </None>
+    <None Update="libaarch64\libtheorafile.so">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <TargetPath>libtheorafile.so</TargetPath>
+    </None>
+  </ItemGroup>
+
+  <ItemGroup Condition="'$(Platform)'=='lib64'">
+    <None Update="lib64\libFAudio.so.0">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <TargetPath>libFAudio.so.0</TargetPath>
+    </None>
+    <None Update="lib64\libFNA3D.so.0">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <TargetPath>libFNA3D.so.0</TargetPath>
+    </None>
+    <None Update="lib64\libSDL2-2.0.so.0">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <TargetPath>libSDL2-2.0.so.0</TargetPath>
+    </None>
+    <None Update="lib64\libtheorafile.so">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <TargetPath>libtheorafile.so</TargetPath>
+    </None>
+  </ItemGroup>
+
+</Project>
