@@ -6,7 +6,12 @@ internal class Program
 {
     private static void Main(string[] args)
     {
-        new ApplicationBuilder(args).ConfigureServices((context, services) =>
+        new ApplicationBuilder(args).ConfigureConfiguration((builder, configuration) =>
+        {
+            var appSettingsLoader = new AppSettingsLoader();
+
+            configuration.AddConfiguration(appSettingsLoader.Builder.Build());
+        }).ConfigureServices((context, services) =>
         {
             services.AddTransient<IServerService, ServerService>();
         }).BuildApplication<IServerService>()?.Run();

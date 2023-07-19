@@ -37,7 +37,15 @@
   </ItemGroup>
 
   <ItemGroup>
+    <PackageReference Include="Microsoft.Extensions.Configuration" Version="8.0.0-preview.6.23329.7" />
     <PackageReference Include="Microsoft.Extensions.Hosting" Version="8.0.0-preview.6.23329.7" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="Application\appsettings.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <TargetPath>appsettings.json</TargetPath>
+    </None>
   </ItemGroup>
 
 </Project>

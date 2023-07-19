@@ -6,6 +6,8 @@ namespace Reoria.Application
 {
     public class ApplicationBuilder : IApplicationBuilder 
     {
+        public static string GetEnvironment() => Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT") ?? "Production";
+
         private readonly IHostBuilder builder;
         private IHost? host;
 
@@ -17,6 +19,13 @@ namespace Reoria.Application
         public IApplicationBuilder ConfigureServices(Action<HostBuilderContext, IServiceCollection> configureDelegate)
         {
             builder.ConfigureServices(configureDelegate);
+
+            return this;
+        }
+
+        public IApplicationBuilder ConfigureConfiguration(Action<HostBuilderContext, Microsoft.Extensions.Configuration.IConfigurationBuilder> configureDelegate)
+        {
+            builder.ConfigureAppConfiguration(configureDelegate);
 
             return this;
         }
