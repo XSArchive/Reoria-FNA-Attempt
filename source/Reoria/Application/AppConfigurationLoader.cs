@@ -5,7 +5,7 @@ namespace Reoria.Application
 {
     public class AppConfigurationLoader : IAppConfigurationLoader
     {
-        private static readonly string[] Environments = { "Development", "Staging", "Production" };
+        protected static readonly string[] Environments = { "Development", "Staging", "Production" };
 
         private readonly IConfigurationBuilder configurationBuilder;
 
@@ -19,24 +19,24 @@ namespace Reoria.Application
                 .AddJsonFile($"appsettings.{ApplicationBuilder.GetEnvironment().ToLower()}.json", optional: true, reloadOnChange: true);
         }
 
-        public IAppConfigurationLoader AddDirectory(string directoryPath)
+        public virtual IAppConfigurationLoader AddJsonFilesFromDirectory(string directoryPath)
         {
-            var appSettingsFiles = Directory.GetFiles(directoryPath, "appsettings.*.json");
+            AddJsonFilesFromDirectory(directoryPath, "appsettings.*.json", Environments);
+            AddJsonFilesFromDirectory(directoryPath, $"appsettings.*.{ApplicationBuilder.GetEnvironment().ToLower()}.json");
+
+            return this;
+        }
+
+        protected virtual void AddJsonFilesFromDirectory(string directoryPath, string searchPattern, string[]? filters = null)
+        {
+            var appSettingsFiles = Directory.GetFiles(directoryPath, searchPattern);
             foreach (var appSettingsFile in appSettingsFiles)
             {
-                if (!Environments.Any(appSettingsFile.Contains))
+                if ((filters is null) || !filters.Any(env => appSettingsFile.Contains(env)))
                 {
                     configurationBuilder.AddJsonFile(appSettingsFile, optional: true, reloadOnChange: true);
                 }
             }
-
-            var appSettingsEnvironmentFiles = Directory.GetFiles(directoryPath, $"appsettings.*.{ApplicationBuilder.GetEnvironment().ToLower()}.json");
-            foreach (var appSettingsFile in appSettingsEnvironmentFiles)
-            {
-                configurationBuilder.AddJsonFile(appSettingsFile, optional: true, reloadOnChange: true);
-            }
-
-            return this;
         }
     }
 }

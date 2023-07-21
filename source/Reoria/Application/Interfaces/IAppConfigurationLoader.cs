@@ -2,6 +2,6 @@
 {
     public interface IAppConfigurationLoader
     {
-        IAppConfigurationLoader AddDirectory(string directoryPath);
+        IAppConfigurationLoader AddJsonFilesFromDirectory(string directoryPath);
     }
 }
