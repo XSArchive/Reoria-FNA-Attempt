@@ -31,16 +31,9 @@ namespace Reoria.Application
             return this;
         }
 
-        public IApplicationBuilder ConfigureSerilog<TSerilogBinder>() where TSerilogBinder : ISerilogBinder
+        public IApplicationBuilder AttachSerilog(ISerilogBinder serilog)
         {
-            serilog = Activator.CreateInstance<TSerilogBinder>();
-
-            return this;
-        }
-
-        public IApplicationBuilder AttachSerilog()
-        {
-            serilog?.AttachToHost(builder);
+            serilog.AttachToHost(builder);
 
             return this;
         }

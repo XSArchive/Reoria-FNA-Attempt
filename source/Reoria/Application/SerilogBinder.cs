@@ -10,11 +10,13 @@ namespace Reoria.Application
 {
     public class SerilogBinder : ISerilogBinder
     {
-        public readonly ILogger logger;
+        private readonly IConfigurationRoot configuration;
+        private readonly ILogger logger;
 
         public SerilogBinder()
         {
-            logger = Build();
+            configuration = LoadConfiguration().Build();
+            logger = BuildLoggerConfiguration(configuration).CreateLogger();
         }
 
         protected virtual IConfigurationBuilder LoadConfiguration()
@@ -25,24 +27,14 @@ namespace Reoria.Application
                 .AddJsonFile($"appsettings.{ApplicationBuilder.GetEnvironment().ToLower()}.json", optional: true, reloadOnChange: true);
         }
 
-        protected virtual LoggerConfiguration BuildLoggerConfiguration()
+        protected virtual LoggerConfiguration BuildLoggerConfiguration() => BuildLoggerConfiguration(configuration);
+
+        protected virtual LoggerConfiguration BuildLoggerConfiguration(IConfiguration configuration)
         {
             return new LoggerConfiguration()
-                    .ReadFrom.Configuration(LoadConfiguration().Build())
-                    .Enrich.FromLogContext()
-                    .WriteTo.Console();
-        }
-
-        protected virtual ILogger Build(bool updateStaticLogger = true)
-        {
-            if(updateStaticLogger)
-            {
-                Log.CloseAndFlush();
-
-                return Log.Logger = BuildLoggerConfiguration().CreateLogger();
-            }
-
-            return BuildLoggerConfiguration().CreateLogger();
+                .ReadFrom.Configuration(configuration)
+                .Enrich.FromLogContext()
+                .WriteTo.Console();
         }
 
         public virtual ISerilogBinder AttachToHost(IHostBuilder hostBuilder)
@@ -55,6 +47,14 @@ namespace Reoria.Application
                     loggingBuilder.AddSerilog(logger: logger, dispose: true);
                 });
             });
+
+            return this;
+        }
+
+        public virtual ISerilogBinder AttachToStatic()
+        {
+            Log.CloseAndFlush();
+            Log.Logger = logger;
 
             return this;
         }

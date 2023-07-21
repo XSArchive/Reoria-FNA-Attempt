@@ -8,8 +8,9 @@ internal class Program
 {
     private static void Main(string[] args)
     {
-        new ApplicationBuilder(args).ConfigureSerilog<SerilogBinder>()
-        .ConfigureConfiguration((builder, configuration) =>
+        var serilog = new SerilogBinder().AttachToStatic();
+
+        var app = new ApplicationBuilder(args).ConfigureConfiguration((builder, configuration) =>
         {
             var appSettingsLoader = new AppConfigurationLoader();
 
@@ -17,8 +18,10 @@ internal class Program
         }).ConfigureServices((context, services) =>
         {
             services.AddTransient<IClientService, ClientService>();
-        }).AttachSerilog()
-        .BuildApplication<IClientService>()?.Run();
+        }).AttachSerilog(serilog)
+        .BuildApplication<IClientService>();
+        
+        app?.Run();
     }
 
     private interface IClientService

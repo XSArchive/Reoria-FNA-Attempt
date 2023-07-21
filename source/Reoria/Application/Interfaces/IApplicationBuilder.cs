@@ -6,10 +6,9 @@ namespace Reoria.Application.Interfaces
 {
     public interface IApplicationBuilder
     {
-        IApplicationBuilder AttachSerilog();
+        IApplicationBuilder AttachSerilog(ISerilogBinder serilog);
         TService? BuildApplication<TService>() where TService : class;
         IApplicationBuilder ConfigureConfiguration(Action<HostBuilderContext, IConfigurationBuilder> configureDelegate);
-        IApplicationBuilder ConfigureSerilog<TSerilogBinder>() where TSerilogBinder : ISerilogBinder;
         IApplicationBuilder ConfigureServices(Action<HostBuilderContext, IServiceCollection> configureDelegate);
     }
 }
