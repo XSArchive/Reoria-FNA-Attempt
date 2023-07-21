@@ -10,6 +10,7 @@ namespace Reoria.Application
 
         private readonly IHostBuilder builder;
         private IHost? host;
+        private ISerilogBinder? serilog;
 
         public ApplicationBuilder(string[]? args)
         {
@@ -26,6 +27,20 @@ namespace Reoria.Application
         public IApplicationBuilder ConfigureConfiguration(Action<HostBuilderContext, Microsoft.Extensions.Configuration.IConfigurationBuilder> configureDelegate)
         {
             builder.ConfigureAppConfiguration(configureDelegate);
+
+            return this;
+        }
+
+        public IApplicationBuilder ConfigureSerilog<TSerilogBinder>() where TSerilogBinder : ISerilogBinder
+        {
+            serilog = Activator.CreateInstance<TSerilogBinder>();
+
+            return this;
+        }
+
+        public IApplicationBuilder AttachSerilog()
+        {
+            serilog?.AttachToHost(builder);
 
             return this;
         }

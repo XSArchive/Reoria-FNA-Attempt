@@ -1,5 +1,6 @@
 ﻿using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Logging;
 using Reoria.Application;
 using Reoria.Client.FNA;
 
@@ -7,7 +8,8 @@ internal class Program
 {
     private static void Main(string[] args)
     {
-        new ApplicationBuilder(args).ConfigureConfiguration((builder, configuration) =>
+        new ApplicationBuilder(args).ConfigureSerilog<SerilogBinder>()
+        .ConfigureConfiguration((builder, configuration) =>
         {
             var appSettingsLoader = new AppConfigurationLoader();
 
@@ -15,7 +17,8 @@ internal class Program
         }).ConfigureServices((context, services) =>
         {
             services.AddTransient<IClientService, ClientService>();
-        }).BuildApplication<IClientService>()?.Run();
+        }).AttachSerilog()
+        .BuildApplication<IClientService>()?.Run();
     }
 
     private interface IClientService
@@ -25,8 +28,16 @@ internal class Program
 
     private class ClientService : IClientService
     {
+        private readonly ILogger<ClientService> logger;
+
+        public ClientService(ILogger<ClientService> logger)
+        {
+            this.logger = logger;
+        }
+
         public void Run()
         {
+            logger.LogInformation("Starting FNA game instance...");
             using var game = new GameInstance();
             game.Run();
         }
