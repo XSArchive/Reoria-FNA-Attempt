@@ -1,12 +1,11 @@
 ﻿using Microsoft.Extensions.Configuration;
 using Reoria.Application.Interfaces;
+using static Reoria.Application.AppEnvironment;
 
 namespace Reoria.Application
 {
     public class AppConfigurationLoader : IAppConfigurationLoader
     {
-        protected static readonly string[] Environments = { "Development", "Staging", "Production" };
-
         private readonly IConfigurationBuilder configurationBuilder;
 
         public IConfigurationBuilder Builder => configurationBuilder;
@@ -16,13 +15,13 @@ namespace Reoria.Application
             configurationBuilder = new ConfigurationBuilder()
                 .SetBasePath(Directory.GetCurrentDirectory())
                 .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true)
-                .AddJsonFile($"appsettings.{ApplicationBuilder.GetEnvironment().ToLower()}.json", optional: true, reloadOnChange: true);
+                .AddJsonFile($"appsettings.{ActiveEnvironment.ToLower()}.json", optional: true, reloadOnChange: true);
         }
 
         public virtual IAppConfigurationLoader AddJsonFilesFromDirectory(string directoryPath)
         {
             AddJsonFilesFromDirectory(directoryPath, "appsettings.*.json", Environments);
-            AddJsonFilesFromDirectory(directoryPath, $"appsettings.*.{ApplicationBuilder.GetEnvironment().ToLower()}.json");
+            AddJsonFilesFromDirectory(directoryPath, $"appsettings.*.{ActiveEnvironment.ToLower()}.json");
 
             return this;
         }

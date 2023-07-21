@@ -4,6 +4,7 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Reoria.Application.Interfaces;
 using Serilog;
+using static Reoria.Application.AppEnvironment;
 using ILogger = Serilog.ILogger;
 
 namespace Reoria.Application
@@ -24,7 +25,7 @@ namespace Reoria.Application
             return new ConfigurationBuilder()
                 .SetBasePath(Directory.GetCurrentDirectory())
                 .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true)
-                .AddJsonFile($"appsettings.{ApplicationBuilder.GetEnvironment().ToLower()}.json", optional: true, reloadOnChange: true);
+                .AddJsonFile($"appsettings.{ActiveEnvironment.ToLower()}.json", optional: true, reloadOnChange: true);
         }
 
         protected virtual LoggerConfiguration BuildLoggerConfiguration() => BuildLoggerConfiguration(configuration);
