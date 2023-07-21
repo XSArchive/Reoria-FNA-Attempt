@@ -1,24 +1,20 @@
 ﻿using Microsoft.Extensions.Configuration;
-using Reoria.Application.Interfaces;
+using Reoria.Application.Configuration.Interfaces;
 using static Reoria.Application.AppEnvironment;
 
-namespace Reoria.Application
+namespace Reoria.Application.Configuration
 {
-    public class AppConfigurationLoader : IAppConfigurationLoader
+    public class ConfigurationLoader : ConfigurationBuilder, IConfigurationLoader
     {
-        private readonly IConfigurationBuilder configurationBuilder;
 
-        public IConfigurationBuilder Builder => configurationBuilder;
-
-        public AppConfigurationLoader()
+        public ConfigurationLoader()
         {
-            configurationBuilder = new ConfigurationBuilder()
-                .SetBasePath(Directory.GetCurrentDirectory())
+            this.SetBasePath(Directory.GetCurrentDirectory())
                 .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true)
                 .AddJsonFile($"appsettings.{ActiveEnvironment.ToLower()}.json", optional: true, reloadOnChange: true);
         }
 
-        public virtual IAppConfigurationLoader AddJsonFilesFromDirectory(string directoryPath)
+        public virtual IConfigurationLoader AddJsonFilesFromDirectory(string directoryPath)
         {
             AddJsonFilesFromDirectory(directoryPath, "appsettings.*.json", Environments);
             AddJsonFilesFromDirectory(directoryPath, $"appsettings.*.{ActiveEnvironment.ToLower()}.json");
@@ -28,12 +24,12 @@ namespace Reoria.Application
 
         protected virtual void AddJsonFilesFromDirectory(string directoryPath, string searchPattern, string[]? filters = null)
         {
-            var appSettingsFiles = Directory.GetFiles(directoryPath, searchPattern);
+            var appSettingsFiles = Directory.GetFiles(directoryPath, searchPattern, SearchOption.AllDirectories);
             foreach (var appSettingsFile in appSettingsFiles)
             {
-                if ((filters is null) || !filters.Any(env => appSettingsFile.Contains(env)))
+                if (filters is null || !filters.Any(env => appSettingsFile.Contains(env)))
                 {
-                    configurationBuilder.AddJsonFile(appSettingsFile, optional: true, reloadOnChange: true);
+                    this.AddJsonFile(appSettingsFile, optional: true, reloadOnChange: true);
                 }
             }
         }

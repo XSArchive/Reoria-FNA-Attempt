@@ -2,6 +2,7 @@
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Reoria.Application;
+using Reoria.Application.Configuration;
 using Reoria.Client.FNA;
 
 internal class Program
@@ -12,9 +13,9 @@ internal class Program
 
         var app = new ApplicationBuilder(args).ConfigureConfiguration((builder, configuration) =>
         {
-            var appSettingsLoader = new AppConfigurationLoader();
+            var configurationLoader = new ConfigurationLoader();
 
-            configuration.AddConfiguration(appSettingsLoader.Builder.AddEnvironmentVariables().Build());
+            configuration.AddConfiguration(configurationLoader.AddEnvironmentVariables().Build());
         }).ConfigureServices((context, services) =>
         {
             services.AddTransient<IClientService, ClientService>();
