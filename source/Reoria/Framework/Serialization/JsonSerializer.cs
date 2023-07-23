@@ -5,7 +5,7 @@ using Json = System.Text.Json.JsonSerializer;
 
 namespace Reoria.Framework.Serialization
 {
-    public class JsonSerializer : Serializer<string>, IJsonSerializer
+    public class JsonSerializer<InputType> : Serializer<InputType, string>, IJsonSerializer<InputType> where InputType : class
     {
         private readonly JsonSerializerOptions jsonSettings;
 
@@ -26,14 +26,14 @@ namespace Reoria.Framework.Serialization
             this.jsonSettings = jsonSettings;
         }
 
-        public override InputType Deserialize<InputType>(string value)
+        public override InputType Deserialize(string value)
         {
             if(string.IsNullOrWhiteSpace(value)) { return Activator.CreateInstance<InputType>(); }
 
             return Json.Deserialize<InputType>(value, jsonSettings) ?? Activator.CreateInstance<InputType>();
         }
 
-        public override string Serialize<InputType>(InputType value)
+        public override string Serialize(InputType value)
         {
             if (value is null) { return string.Empty; }
 

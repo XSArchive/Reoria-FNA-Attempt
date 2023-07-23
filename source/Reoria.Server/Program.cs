@@ -3,6 +3,9 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Reoria.Application;
 using Reoria.Application.Configuration;
+using Reoria.Framework.Serialization;
+using Reoria.Framework.Serialization.Extensions;
+using Reoria.Framework.Serialization.Interfaces;
 
 internal class Program
 {
@@ -17,6 +20,7 @@ internal class Program
             configuration.AddConfiguration(configurationLoader.AddEnvironmentVariables().Build());
         }).ConfigureServices((context, services) =>
         {
+            services.AddTransient(typeof(IJsonSerializer<>), typeof(JsonSerializer<>));
             services.AddTransient<IServerService, ServerService>();
         }).AttachSerilog(serilog)
         .BuildApplication<IServerService>();
@@ -33,16 +37,44 @@ internal class Program
     {
         private readonly ILogger<ServerService> logger;
         private readonly IConfiguration configuration;
+        private readonly IJsonSerializer<TestJsonClass> serializer;
 
-        public ServerService(ILogger<ServerService> logger, IConfiguration configuration)
+        public ServerService(ILogger<ServerService> logger, IConfiguration configuration, IJsonSerializer<TestJsonClass> serializer)
         {
             this.logger = logger;
             this.configuration = configuration;
+            this.serializer = serializer;
         }
 
         public void Run()
         {
-            logger.LogInformation($"Hello {configuration.GetValue<string>("username") ?? "Dave"}!");
+            logger.LogInformation("Hello {username}!", configuration.GetValue<string>("username") ?? "Dave");
+
+            if(!File.Exists("test.json"))
+            {
+                serializer.SerializeToFile(new TestJsonClass(), "test.json");
+            }
+
+            var test = serializer.DeserializeFromFile("test.json");
+            while(true)
+            {
+                test.CurrentDateTime = DateTime.Now;
+                serializer.SerializeToFile(test, "test.json");
+
+                Thread.Sleep(100);
+            }
+        }
+    }
+
+    public class TestJsonClass
+    {
+        public Guid Guid { get; set; }
+        public DateTime CurrentDateTime { get; set; }
+
+        public TestJsonClass()
+        {
+            Guid = Guid.NewGuid();
+            CurrentDateTime = DateTime.Now;
         }
     }
 }
