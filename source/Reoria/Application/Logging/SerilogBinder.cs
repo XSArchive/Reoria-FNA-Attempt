@@ -2,12 +2,12 @@
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
-using Reoria.Application.Interfaces;
+using Reoria.Application.Logging.Interfaces;
 using Serilog;
 using static Reoria.Application.AppEnvironment;
 using ILogger = Serilog.ILogger;
 
-namespace Reoria.Application
+namespace Reoria.Application.Logging
 {
     public class SerilogBinder : ISerilogBinder
     {
@@ -28,8 +28,6 @@ namespace Reoria.Application
                 .AddJsonFile($"appsettings.{ActiveEnvironment.ToLower()}.json", optional: true, reloadOnChange: true);
         }
 
-        protected virtual LoggerConfiguration BuildLoggerConfiguration() => BuildLoggerConfiguration(configuration);
-
         protected virtual LoggerConfiguration BuildLoggerConfiguration(IConfiguration configuration)
         {
             return new LoggerConfiguration()
@@ -38,7 +36,7 @@ namespace Reoria.Application
                 .WriteTo.Console();
         }
 
-        public virtual ISerilogBinder AttachToHost(IHostBuilder hostBuilder)
+        public virtual ILogBinder AttachToHost(IHostBuilder hostBuilder)
         {
             hostBuilder.ConfigureServices((context, services) =>
             {
