@@ -2,6 +2,7 @@
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Reoria.Application.Interfaces;
+using Reoria.Application.Logging.Interfaces;
 
 namespace Reoria.Application
 {

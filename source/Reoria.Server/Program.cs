@@ -3,6 +3,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Reoria.Application;
 using Reoria.Application.Configuration;
+using Reoria.Application.Logging;
 using Reoria.Framework.Serialization;
 using Reoria.Framework.Serialization.Extensions;
 using Reoria.Framework.Serialization.Interfaces;
