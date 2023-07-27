@@ -1,9 +1,9 @@
 ﻿using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Reoria.Application.Logging.Interfaces;
+using Reoria.Hosting.Logging.Interfaces;
 
-namespace Reoria.Application.Interfaces
+namespace Reoria.Hosting.Interfaces
 {
     public interface IApplicationBuilder
     {

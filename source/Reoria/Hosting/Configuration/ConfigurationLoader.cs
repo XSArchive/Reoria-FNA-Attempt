@@ -1,8 +1,8 @@
 ﻿using Microsoft.Extensions.Configuration;
-using Reoria.Application.Configuration.Interfaces;
-using static Reoria.Application.AppEnvironment;
+using Reoria.Hosting.Configuration.Interfaces;
+using static Reoria.Hosting.AppEnvironment;
 
-namespace Reoria.Application.Configuration
+namespace Reoria.Hosting.Configuration
 {
     public class ConfigurationLoader : ConfigurationBuilder, IConfigurationLoader
     {

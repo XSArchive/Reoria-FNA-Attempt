@@ -1,4 +1,4 @@
-﻿namespace Reoria.Application
+﻿namespace Reoria.Hosting
 {
     public static class AppEnvironment
     {

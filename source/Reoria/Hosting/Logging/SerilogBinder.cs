@@ -2,12 +2,12 @@
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
-using Reoria.Application.Logging.Interfaces;
+using Reoria.Hosting.Logging.Interfaces;
 using Serilog;
-using static Reoria.Application.AppEnvironment;
+using static Reoria.Hosting.AppEnvironment;
 using ILogger = Serilog.ILogger;
 
-namespace Reoria.Application.Logging
+namespace Reoria.Hosting.Logging
 {
     public class SerilogBinder : ISerilogBinder
     {

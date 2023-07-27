@@ -1,6 +1,6 @@
 ﻿using Microsoft.Extensions.Configuration;
 
-namespace Reoria.Application.Configuration.Interfaces
+namespace Reoria.Hosting.Configuration.Interfaces
 {
     public interface IConfigurationLoader : IConfigurationBuilder
     {

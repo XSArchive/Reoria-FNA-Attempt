@@ -46,7 +46,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <None Update="Application\appsettings.json">
+    <None Update="Hosting\appsettings.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
       <TargetPath>appsettings.json</TargetPath>
     </None>

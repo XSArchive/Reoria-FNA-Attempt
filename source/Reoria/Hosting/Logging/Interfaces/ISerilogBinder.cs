@@ -1,4 +1,4 @@
-﻿namespace Reoria.Application.Logging.Interfaces
+﻿namespace Reoria.Hosting.Logging.Interfaces
 {
     public interface ISerilogBinder : ILogBinder
     {
