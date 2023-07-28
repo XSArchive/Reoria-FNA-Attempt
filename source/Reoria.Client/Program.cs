@@ -1,5 +1,4 @@
-﻿using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.DependencyInjection;
+﻿using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Reoria.Client.FNA;
 using Reoria.Hosting;
@@ -10,20 +9,16 @@ internal class Program
 {
     private static void Main(string[] args)
     {
-        var serilog = new SerilogBinder().AttachToStatic();
+        using var app = new Application()
+            .AssignConfigurationBuilder<ConfigurationLoader>()
+            .AssignLogBinder<SerilogBinder>();
 
-        var app = new ApplicationBuilder(args).ConfigureConfiguration((builder, configuration) =>
-        {
-            var configurationLoader = new ConfigurationLoader();
-
-            configuration.AddConfiguration(configurationLoader.AddEnvironmentVariables().Build());
-        }).ConfigureServices((context, services) =>
+        app.OnConfigureServices += (context, services) =>
         {
             services.AddTransient<IClientService, ClientService>();
-        }).AttachSerilog(serilog)
-        .BuildApplication<IClientService>();
-        
-        app?.Run();
+        };
+
+        app.Start<IClientService>(args).Run();
     }
 
     private interface IClientService

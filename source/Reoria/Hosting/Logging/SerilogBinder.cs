@@ -1,6 +1,4 @@
 ﻿using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Reoria.Hosting.Logging.Interfaces;
 using Serilog;
@@ -36,16 +34,9 @@ namespace Reoria.Hosting.Logging
                 .WriteTo.Console();
         }
 
-        public virtual ILogBinder AttachToHost(IHostBuilder hostBuilder)
+        public virtual ILogBinder AttachToHost(ILoggingBuilder loggingBuilder)
         {
-            hostBuilder.ConfigureServices((context, services) =>
-            {
-                services.AddLogging(loggingBuilder =>
-                {
-                    loggingBuilder.ClearProviders();
-                    loggingBuilder.AddSerilog(logger: logger, dispose: true);
-                });
-            });
+            loggingBuilder.AddSerilog(logger: logger, dispose: true);
 
             return this;
         }

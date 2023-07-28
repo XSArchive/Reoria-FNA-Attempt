@@ -12,24 +12,20 @@ internal class Program
 {
     private static void Main(string[] args)
     {
-        var serilog = new SerilogBinder().AttachToStatic();
+        using var app = new Application()
+            .AssignConfigurationBuilder<ConfigurationLoader>()
+            .AssignLogBinder<SerilogBinder>();
 
-        var app = new ApplicationBuilder(args).ConfigureConfiguration((builder, configuration) =>
-        {
-            var configurationLoader = new ConfigurationLoader();
-
-            configuration.AddConfiguration(configurationLoader.AddEnvironmentVariables().Build());
-        }).ConfigureServices((context, services) =>
+        app.OnConfigureServices += (context, services) =>
         {
             services.AddTransient(typeof(IJsonSerializer<>), typeof(JsonSerializer<>));
             services.AddTransient<IServerService, ServerService>();
-        }).AttachSerilog(serilog)
-        .BuildApplication<IServerService>();
-        
-        app?.Run();
+        };
+
+        app.Start<IServerService>(args).Run();
     }
 
-    private interface IServerService
+    public interface IServerService
     {
         void Run();
     }

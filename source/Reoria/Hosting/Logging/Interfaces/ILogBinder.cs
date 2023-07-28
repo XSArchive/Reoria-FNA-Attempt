@@ -1,9 +1,9 @@
-﻿using Microsoft.Extensions.Hosting;
+﻿using Microsoft.Extensions.Logging;
 
 namespace Reoria.Hosting.Logging.Interfaces
 {
     public interface ILogBinder
     {
-        ILogBinder AttachToHost(IHostBuilder hostBuilder);
+        ILogBinder AttachToHost(ILoggingBuilder loggingBuilder);
     }
 }
